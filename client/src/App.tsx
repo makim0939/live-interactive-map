@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import io from 'socket.io-client';
+import MapContents from './components/MapContents';
 function App() {
   useEffect(() => {
     const SERVER_URL = 'http://' + location.hostname + ':3000';
@@ -13,7 +14,7 @@ function App() {
   }, []);
   return (
     <>
-      <h2 className=" text-red-600">Live Interactive Map - Client</h2>
+      <MapContents />
     </>
   );
 }
