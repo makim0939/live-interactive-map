@@ -7,7 +7,7 @@ const useSocket = () => {
   useEffect(() => {
     const socket = io(SERVER_URL);
     socket.on('connect', () => {
-      socket.emit('display-detect', socket.id);
+      socket.emit('display-detection', socket.id);
     });
     setSocket(socket);
     return () => {
