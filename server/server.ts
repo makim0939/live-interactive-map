@@ -9,3 +9,10 @@ const io = new Server(server, {
     origin: '*',
   },
 });
+
+let displayId = '';
+io.on('connection', (socket) => {
+  socket.on('display-detection', () => {
+    displayId = socket.id;
+  });
+});
