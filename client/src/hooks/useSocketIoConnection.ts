@@ -6,9 +6,6 @@ const useSocketIoConnection = () => {
   const [socket, setSocket] = useState<Socket>();
   useEffect(() => {
     const socket = io(SERVER_URL);
-    socket.on('connect', () => {
-      console.log('Connected to server', socket.id);
-    });
     setSocket(socket);
     return () => {
       socket.disconnect();
