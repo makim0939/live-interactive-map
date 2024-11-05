@@ -1,9 +1,14 @@
+import MapContents from './components/MapContents';
+import useContentsScaling from './hooks/useContentsScaling';
 import useSocket from './hooks/useSocket';
 function App() {
   const socket = useSocket();
+  const { ratio, contentsRect } = useContentsScaling();
   return (
     <>
-      <h2 className=" text-red-600">Live Interactive Map - Display</h2>
+      <div id="contents" className=" w-fit">
+        <MapContents />
+      </div>
     </>
   );
 }
