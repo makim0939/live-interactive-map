@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-const SERVER_URL = 'http://' + location.hostname + ':3000';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
 const useSocketIoConnection = () => {
   const [socket, setSocket] = useState<Socket>();
   useEffect(() => {
