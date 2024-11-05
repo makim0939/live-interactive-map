@@ -1,12 +1,13 @@
 import http from 'http';
 import { Server } from 'socket.io';
+import { config } from 'dotenv';
+config({ path: '../.env.local' });
 
 const server = http.createServer();
-
 server.listen(3000, () => console.log('Server running on port 3000'));
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: [process.env.VITE_CLIENT_URL as string, process.env.VITE_DISPLAY_URL as string],
   },
 });
 
