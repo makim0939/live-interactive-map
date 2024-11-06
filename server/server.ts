@@ -16,4 +16,8 @@ io.on('connection', (socket) => {
   socket.on('display-detection', () => {
     displayId = socket.id;
   });
+  socket.to(displayId).emit('client-connect', socket.id);
+  socket.on('disconnect', () => {
+    socket.to(displayId).emit('client-disconnect', socket.id);
+  });
 });
