@@ -1,8 +1,11 @@
+import { io } from 'socket.io-client';
 import MapContents from './components/MapContents';
 import useContentsScaling from './hooks/useContentsScaling';
-import useSocket from './hooks/useSocket';
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
+const socket = io(SERVER_URL);
+
 function App() {
-  const socket = useSocket();
   const { ratio, contentsRect } = useContentsScaling();
   return (
     <>
