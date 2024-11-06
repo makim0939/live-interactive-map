@@ -30,7 +30,7 @@ const useClientCanvases = (contentsRect: ContentsRect, socket?: Socket) => {
     return () => {
       socket.off('client-connect');
     };
-  }, [socket, clientCanvases]);
+  }, [socket, clientCanvases, contentsRect]);
 
   useEffect(() => {
     clientCanvases.forEach((clientCanvas) => {

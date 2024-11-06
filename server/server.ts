@@ -20,4 +20,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     socket.to(displayId).emit('client-disconnect', socket.id);
   });
+  socket.on('view-rect', (viewRect) => {
+    socket.to(displayId).emit('view-rect', { clientId: socket.id, viewRect });
+  });
 });
