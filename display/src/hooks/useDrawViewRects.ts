@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Socket } from 'socket.io-client';
 import { ClientCanvas } from '../types';
 
-//TODO: ユーザによって四角のサイズ、色を変える
 type ViewRect = { left: number; top: number; width: number; height: number; color: string };
 const useDrawingViewRects = (ratio: number, clientCanvases: ClientCanvas[], socket?: Socket) => {
   useEffect(() => {
