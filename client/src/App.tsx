@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import MapContents from './components/MapContents';
 import sendViewRect from './socketio/sendViewRect';
 import { BoothInfo } from './types.ts';
-import getBoothInViewport from './getBoothInViewPort.ts';
+import getBoothInViewport from './getBoothInViewport.ts';
 import { addDummyBooths } from './debugFunctinos.ts';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
