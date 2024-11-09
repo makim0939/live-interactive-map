@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
-import { ClientCanvas, ContentsRect } from '../types';
+import { ClientCanvas, Rect } from '../types';
 
-//キャンバスの設定
+//TODO:キャンバスの設定
 
 // キャンバス管理全般
-const useClientCanvases = (contentsRect: ContentsRect, socket?: Socket) => {
+const useClientCanvases = (contentsRect: Rect, socket?: Socket) => {
   const [clientCanvases, setClientCanvases] = useState<ClientCanvas[]>([]);
   useEffect(() => {
     const createCanvas = (id: string) => {

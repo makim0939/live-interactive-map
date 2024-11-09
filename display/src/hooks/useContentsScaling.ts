@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Rect } from '../types';
 
-type ContentsRect = { top: number; left: number; width: number; height: number };
 const useContentsScaling = () => {
-  const [contentsRect, setContentsRect] = useState<ContentsRect>({
+  const [contentsRect, setContentsRect] = useState<Rect>({
     left: 0,
     top: 0,
     width: 0,
