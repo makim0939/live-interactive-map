@@ -4,10 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        black: '#252528',
-        white: '#f5f5f2',
-        gray: '#555558',
-        lightgray: '#757578',
+        textblack: '#252528',
+        textgray: '#555558',
+        textlightgray: '#757578',
+        bgwhite: '#f5f5f2',
+        borderlightgray: '#d5d5d8',
       },
     },
   },
