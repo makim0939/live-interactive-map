@@ -3,6 +3,7 @@ import MapContents from './components/MapContents';
 import useContentsScaling from './hooks/useContentsScaling';
 import useClientCanvases from './hooks/useClientCanvases';
 import useDrawingViewRects from './hooks/useDrawViewRects';
+import BoothSettingForm from './components/BoothSettingForm';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
 const socket = io(SERVER_URL);
@@ -19,6 +20,7 @@ function App() {
       <div id="contents" className=" w-fit">
         <MapContents />
       </div>
+      <BoothSettingForm />
     </>
   );
 }
