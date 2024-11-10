@@ -1,35 +1,26 @@
 import React from 'react';
 
-type TextInputProps = {
-  name: string;
-  id: string;
-  type: string;
-  className?: string;
-  row?: number;
-  col?: number;
-};
-const TextInput = (props: TextInputProps) => {
-  return (
-    <>
-      {props.type === 'text' && (
-        <input
-          name={props.name}
-          id={props.id}
-          type="text"
-          className={` p-1 rounded-md border border-borderlightgray ${props.className || ''}`}
-        />
-      )}
-      {props.type === 'textarea' && (
-        <textarea
-          name={props.name}
-          id={props.id}
-          className={` resize-none  p-1 rounded-md border border-borderlightgray ${props.className || ''}`}
-          rows={props.row || 3}
-          cols={props.col || 33}
-        ></textarea>
-      )}
-    </>
-  );
+type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & { type: 'text' };
+type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & { type: 'textarea' };
+const TextInput = (props: TextAreaProps | TextInputProps) => {
+  if (props.type === 'text') {
+    const { className, ...inputAttrs } = props;
+    return (
+      <input
+        {...inputAttrs}
+        className={` p-1 rounded-md border border-borderlightgray ${className || ''}`}
+      />
+    );
+  }
+  if (props.type === 'textarea') {
+    const { className, ...textareaAttrs } = props;
+    return (
+      <textarea
+        {...textareaAttrs}
+        className={` resize-none  p-1 rounded-md border border-borderlightgray ${className || ''}`}
+      ></textarea>
+    );
+  }
 };
 
 export default TextInput;

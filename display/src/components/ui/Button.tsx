@@ -1,17 +1,16 @@
 import React from 'react';
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string;
-  onClick?: () => void;
-  className?: string;
 };
 const Button = (props: ButtonProps) => {
+  const { text, className, ...buttonAttrs } = props;
   return (
     <button
-      onClick={props.onClick}
-      className={`w-fit px-4 py-1 rounded-sm bg-blue-600 text-white ${props.className || ''}`}
+      {...buttonAttrs}
+      className={`w-fit px-4 py-1 rounded-sm bg-blue-600 text-white ${className || ''}`}
     >
-      {props.text}
+      {text}
     </button>
   );
 };
