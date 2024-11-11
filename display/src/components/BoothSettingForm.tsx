@@ -1,16 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TextInput from './ui/TextInput';
 import Button from './ui/Button';
 import NumberInput from './ui/NumberInput';
-
-type BoothSettingsInputs = {
-  title: string;
-  description: string;
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-};
 
 const BoothSettingForm = () => {
   const [title, setTitle] = useState('');
@@ -25,7 +16,7 @@ const BoothSettingForm = () => {
     console.log({ title, description, left, top, width, height });
   };
   return (
-    <div className="absolute top-0 left-0 z-20 p-8 bg-bgwhite rounded-lg ">
+    <div id="form" className=" w-96 z-10 p-8 bg-bgwhite rounded-lg ">
       <h2 className=" text-center text-2xl font-semibold">ブースを追加</h2>
       <form onSubmit={handleSubmit} className=" flex flex-col ">
         <div className=" flex flex-col my-4 ">
@@ -48,51 +39,63 @@ const BoothSettingForm = () => {
         </div>
         <div className=" flex flex-col my-4">
           <label htmlFor="position">配置</label>
-          <div id="position">
-            <div className=" flex justify-around my-4">
-              <div className=" w-1/3">
-                <label htmlFor="left">x: </label>
-                <NumberInput
-                  name="left"
-                  id="left"
-                  type="number"
-                  className=" w-4/5 "
-                  onChange={(e) => setLeft(e.target.valueAsNumber)}
-                />
-              </div>
-              <div className=" w-1/3">
-                <label htmlFor="top">y: </label>
-                <NumberInput
-                  name="top"
-                  id="top"
-                  type="number"
-                  className=" w-4/5 "
-                  onChange={(e) => setTop(e.target.valueAsNumber)}
-                />
-              </div>
-            </div>
-            <div className=" flex justify-around my-4">
-              <div className=" w-1/3">
-                <label htmlFor="width">w: </label>
-                <NumberInput
-                  name="width"
-                  id="width"
-                  type="number"
-                  className=" w-4/5 "
-                  onChange={(e) => setWidth(e.target.valueAsNumber)}
-                />
-              </div>
-              <div className=" w-1/3">
-                <label htmlFor="height">h: </label>
-                <NumberInput
-                  name="height"
-                  id="height"
-                  type="number"
-                  className=" w-4/5 "
-                  onChange={(e) => setHeight(e.target.valueAsNumber)}
-                />
-              </div>
-            </div>
+          <div id="position" className=" ">
+            <table className=" w-full border-separate border-spacing-y-4 ">
+              <tbody>
+                <tr>
+                  <td className=" w-5 ">
+                    <label htmlFor="left">x</label>
+                  </td>
+                  <td>
+                    <NumberInput
+                      name="left"
+                      id="left"
+                      type="number"
+                      onChange={(e) => setLeft(e.target.valueAsNumber)}
+                      className=" w-4/5"
+                    />
+                  </td>
+                  <td className=" w-5 ">
+                    <label htmlFor="top">y</label>
+                  </td>
+                  <td>
+                    <NumberInput
+                      name="top"
+                      id="top"
+                      type="number"
+                      onChange={(e) => setTop(e.target.valueAsNumber)}
+                      className=" w-4/5"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td className=" w-5 ">
+                    <label htmlFor="width">w</label>
+                  </td>
+                  <td>
+                    <NumberInput
+                      name="width"
+                      id="width"
+                      type="number"
+                      onChange={(e) => setWidth(e.target.valueAsNumber)}
+                      className=" w-4/5"
+                    />
+                  </td>
+                  <td className=" w-5 ">
+                    <label htmlFor="height">h</label>
+                  </td>
+                  <td>
+                    <NumberInput
+                      name="height"
+                      id="height"
+                      type="number"
+                      onChange={(e) => setHeight(e.target.valueAsNumber)}
+                      className=" w-4/5"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <div className=" flex justify-end my-4">
