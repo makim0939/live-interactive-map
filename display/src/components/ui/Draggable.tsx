@@ -1,25 +1,38 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-const Draggable = ({ children }: { children: React.ReactNode }) => {
+const Draggable = ({
+  children,
+  ignoreTags,
+}: {
+  children: React.ReactNode;
+  ignoreTags?: (keyof HTMLElementTagNameMap)[];
+}) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
   const [endPosition, setEndPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseDown = (event: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (ignoreTags) {
+      const upperIgnoreTags = ignoreTags?.map((tag) => tag.toUpperCase());
+      const target = e.target as HTMLElement;
+      if (upperIgnoreTags.includes(target.tagName)) {
+        return;
+      }
+    }
     if (isDragging) return;
     setIsDragging(true);
     setStartPosition({
-      x: event.clientX,
-      y: event.clientY,
+      x: e.clientX,
+      y: e.clientY,
     });
   };
 
   const handleMouseMove = useCallback(
-    (event: React.MouseEvent | MouseEvent) => {
+    (e: React.MouseEvent | MouseEvent) => {
       if (!isDragging) return;
-      const DeltaX = event.clientX - startPosition.x;
-      const DeltaY = event.clientY - startPosition.y;
+      const DeltaX = e.clientX - startPosition.x;
+      const DeltaY = e.clientY - startPosition.y;
       setPosition({
         x: endPosition.x + DeltaX,
         y: endPosition.y + DeltaY,
@@ -45,7 +58,9 @@ const Draggable = ({ children }: { children: React.ReactNode }) => {
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+        }}
         className=" absolute top-0 left-0 w-fit z-10 cursor-pointer origin-top-left"
       >
         {children}
