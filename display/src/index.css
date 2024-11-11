@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  overflow: hidden;
+}
 :root {
   letter-spacing: 0.06em;
   color: #252528;
