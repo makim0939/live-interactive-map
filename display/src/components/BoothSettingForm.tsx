@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import TextInput from './ui/TextInput';
 import Button from './ui/Button';
 import NumberInput from './ui/NumberInput';
@@ -16,8 +16,8 @@ const BoothSettingForm = () => {
     console.log({ title, description, left, top, width, height });
   };
   return (
-    <div id="form" className=" w-96 z-10 p-8 bg-bgwhite rounded-lg ">
-      <h2 className=" text-center text-2xl font-semibold">ブースを追加</h2>
+    <div id="form" className=" w-96 p-4 ">
+      <h2 className=" text-2xl font-semibold">ブースを追加</h2>
       <form onSubmit={handleSubmit} className=" flex flex-col ">
         <div className=" flex flex-col my-4 ">
           <label htmlFor="title">ブース名</label>
