@@ -5,6 +5,8 @@ import useClientCanvases from './hooks/useClientCanvases';
 import useDrawingViewRects from './hooks/useDrawViewRects';
 import BoothSettingForm from './components/BoothSettingForm';
 import Draggable from './components/ui/Draggable';
+import BoothPositionSettings from './components/ui/BoothPositionSettings';
+import BoothList from './components/BoothList';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
 const socket = io(SERVER_URL);
@@ -21,8 +23,13 @@ function App() {
       <div id="contents" className=" w-fit">
         <MapContents />
       </div>
-      <Draggable>
-        <BoothSettingForm />
+      <BoothPositionSettings />
+      <Draggable ignoreTags={['input']}>
+        <div className=" w-fit h-fit flex bg-bgwhite rounded-md">
+          <BoothList />
+          <div className=" w-[1px] my-4 bg-[#b5b5b8]"></div>
+          <BoothSettingForm />
+        </div>
       </Draggable>
     </>
   );
