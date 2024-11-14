@@ -1,7 +1,10 @@
 import AddIcon from './icon/AddIcon';
 import BoothListItem from './BoothListItem';
+import { useQuery } from '@tanstack/react-query';
+import { selectAllBooths } from '../utils/supabaseFunctions';
 
 const BoothList = () => {
+  const query = useQuery({ queryKey: ['booths'], queryFn: selectAllBooths });
   return (
     <div className=" w-60 p-4 ">
       <div className=" flex items-center justify-between ">
@@ -9,11 +12,11 @@ const BoothList = () => {
         <AddIcon />
       </div>
       <ul>
-        <BoothListItem
-          boothName="たこ焼き屋さん"
-          boothDescription="ロシアンたこ焼きあります！どこよりも熱々で美味しいたこ焼きを提供します。"
-        />
-        <BoothListItem boothName="テスト" boothDescription="テストです。" />
+        {query.data?.map((booth) => (
+          <>
+            <BoothListItem boothName={booth.name} boothDescription={booth.description} />
+          </>
+        ))}
       </ul>
     </div>
   );

@@ -7,19 +7,29 @@ import BoothSettingForm from './components/BoothSettingForm';
 import Draggable from './components/ui/Draggable';
 import BoothPositionSettings from './components/ui/BoothPositionSettings';
 import BoothList from './components/BoothList';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
-const socket = io(SERVER_URL);
+console.log(SERVER_URL);
+const socket = io(SERVER_URL, {
+  extraHeaders: {
+    'ngrok-skip-browser-warning': 'true',
+  },
+});
 socket.on('connect', () => {
+  console.log('server-connected');
   socket.emit('display-detection');
 });
+
+const queryClient = new QueryClient();
 
 function App() {
   const { ratio, contentsRect } = useContentsScaling();
   const clientCanvases = useClientCanvases(contentsRect, socket);
   useDrawingViewRects(ratio, clientCanvases, socket);
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <div id="contents" className=" w-fit">
         <MapContents />
       </div>
@@ -31,7 +41,8 @@ function App() {
           <BoothSettingForm />
         </div>
       </Draggable>
-    </>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
