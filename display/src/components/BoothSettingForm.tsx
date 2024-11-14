@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import TextInput from './ui/TextInput';
 import Button from './ui/Button';
 import NumberInput from './ui/NumberInput';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { insertBooth, selectAllBooths } from '../utils/supabaseFunctions';
-import { supabase } from '../utils/supabaseClient';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { insertBooth } from '../utils/supabaseFunctions';
 import { Booth, BoothInsertProps } from '../types';
 
-type Rect = { left: number; top: number; width: number; height: number };
 const BoothSettingForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -17,7 +15,6 @@ const BoothSettingForm = () => {
   const [height, setHeight] = useState<number | ''>('');
 
   const queryClient = useQueryClient();
-  const query = useQuery({ queryKey: ['booths'], queryFn: selectAllBooths });
 
   const mutation = useMutation({
     mutationFn: async (data: BoothInsertProps) => {
