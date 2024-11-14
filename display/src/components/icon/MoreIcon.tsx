@@ -1,6 +1,4 @@
-import { IconProps } from './icon.types';
-
-const MoreIcon = (iconProps: IconProps) => {
+const MoreIcon = (attrsProps: React.SVGAttributes<SVGElement>, styleProps: React.CSSProperties) => {
   return (
     <svg
       width="24"
@@ -8,7 +6,8 @@ const MoreIcon = (iconProps: IconProps) => {
       viewBox="0 0 24 24"
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
-      style={iconProps.style}
+      {...attrsProps}
+      style={styleProps}
     >
       <mask
         id="mask0_6_650"

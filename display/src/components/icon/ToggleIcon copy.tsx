@@ -1,6 +1,7 @@
-import { IconProps } from './icon.types';
-
-const ToggleIcon = (iconProps: IconProps) => {
+const ToggleIcon = (
+  attrsProps: React.SVGAttributes<SVGElement>,
+  styleProps: React.CSSProperties,
+) => {
   return (
     <svg
       width="24"
@@ -8,7 +9,8 @@ const ToggleIcon = (iconProps: IconProps) => {
       viewBox="0 0 24 24"
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ transition: '.1s', ...iconProps.style }}
+      {...attrsProps}
+      style={{ transition: '.1s', ...styleProps }}
     >
       <mask
         id="mask0_9_432"
