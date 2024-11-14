@@ -8,7 +8,11 @@ import MapContents from './components/MapContents';
 import BoothCard from './components/BoothCard.tsx';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
-const socket = io(SERVER_URL);
+const socket = io(SERVER_URL, {
+  extraHeaders: {
+    'ngrok-skip-browser-warning': 'true',
+  },
+});
 
 const booths: BoothInfo[] = [];
 socket.on('booth', (booth: BoothInfo) => {
