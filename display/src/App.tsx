@@ -9,6 +9,7 @@ import BoothPositionSettings from './components/ui/BoothPositionSettings';
 import BoothList from './components/BoothList';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useState } from 'react';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
 console.log(SERVER_URL);
@@ -28,6 +29,9 @@ function App() {
   const { ratio, contentsRect } = useContentsScaling();
   const clientCanvases = useClientCanvases(contentsRect, socket);
   useDrawingViewRects(ratio, clientCanvases, socket);
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div id="contents" className=" w-fit">
@@ -36,9 +40,13 @@ function App() {
       <BoothPositionSettings />
       <Draggable ignoreTags={['input']}>
         <div className=" w-fit h-fit flex bg-bgwhite rounded-md">
-          <BoothList />
-          <div className=" w-[1px] my-4 bg-[#b5b5b8]"></div>
-          <BoothSettingForm />
+          <BoothList isFormOpen={isFormOpen} setIsFormOpen={setIsFormOpen} />
+          {isFormOpen && (
+            <>
+              <div className=" w-[1px] my-4 bg-[#b5b5b8]"></div>
+              <BoothSettingForm />
+            </>
+          )}
         </div>
       </Draggable>
       <ReactQueryDevtools initialIsOpen={false} />
