@@ -17,9 +17,13 @@ const BoothList = ({
       <div className=" flex items-center justify-between ">
         <h2 className=" text-center text-2xl font-semibold">ブース</h2>
         {isFormOpen ? (
-          <ArrowBackwardIcon onClick={() => setIsFormOpen(false)} />
+          <button onClick={() => setIsFormOpen(false)}>
+            <ArrowBackwardIcon />
+          </button>
         ) : (
-          <AddIcon onClick={() => setIsFormOpen(true)} />
+          <button onClick={() => setIsFormOpen(true)}>
+            <AddIcon />
+          </button>
         )}
       </div>
       <ul>

@@ -1,7 +1,4 @@
-const ArrowBackwardIcon = (
-  attrsProps: React.SVGAttributes<SVGElement>,
-  styleProps: React.CSSProperties,
-) => {
+const ArrowBackwardIcon = ({ style }: { style?: React.CSSProperties }) => {
   return (
     <svg
       width="24"
@@ -9,8 +6,7 @@ const ArrowBackwardIcon = (
       viewBox="0 0 24 24"
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
-      {...attrsProps}
-      style={styleProps}
+      style={style}
     >
       <mask id="mask0_20_447" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
         <rect x="24" y="24" width="24" height="24" transform="rotate(-180 24 24)" fill="#D9D9D9" />
