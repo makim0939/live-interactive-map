@@ -1,24 +1,56 @@
 import React from 'react';
+import { FieldValues, Path, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-type TextInputProps = React.InputHTMLAttributes<HTMLInputElement> & { type: 'text' };
-type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & { type: 'textarea' };
-const TextInput = (props: TextAreaProps | TextInputProps) => {
+type TextInputProps<T extends FieldValues> = React.InputHTMLAttributes<HTMLInputElement> & {
+  type: 'text';
+  name: Path<T>;
+  register?: UseFormRegister<T>;
+  registerOptions?: RegisterOptions<T, Path<T>>;
+};
+type TextAreaProps<T extends FieldValues> = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  type: 'textarea';
+  name: Path<T>;
+  register?: UseFormRegister<T>;
+  registerOptions?: RegisterOptions<T, Path<T>>;
+};
+
+const TextInput = <T extends FieldValues>(props: TextAreaProps<T> | TextInputProps<T>) => {
   if (props.type === 'text') {
-    const { className, ...inputAttrs } = props;
+    const { className, register, registerOptions, ...inputAttrs } = props;
     return (
-      <input
-        {...inputAttrs}
-        className={` p-1 rounded-md border border-borderlightgray ${className || ''}`}
-      />
+      <>
+        {register ? (
+          <input
+            {...inputAttrs}
+            {...register(inputAttrs.name, registerOptions)}
+            className={` p-1 rounded-md border border-borderlightgray ${className || ''}`}
+          />
+        ) : (
+          <input
+            {...inputAttrs}
+            className={` p-1 rounded-md border border-borderlightgray ${className || ''}`}
+          />
+        )}
+      </>
     );
   }
   if (props.type === 'textarea') {
-    const { className, ...textareaAttrs } = props;
+    const { className, register, registerOptions, ...textareaAttrs } = props;
     return (
-      <textarea
-        {...textareaAttrs}
-        className={` resize-none  p-1 rounded-md border border-borderlightgray ${className || ''}`}
-      ></textarea>
+      <>
+        {register ? (
+          <textarea
+            {...textareaAttrs}
+            {...register(textareaAttrs.name, registerOptions)}
+            className={` resize-none  p-1 rounded-md border border-borderlightgray ${className || ''}`}
+          />
+        ) : (
+          <textarea
+            {...textareaAttrs}
+            className={` resize-none  p-1 rounded-md border border-borderlightgray ${className || ''}`}
+          ></textarea>
+        )}
+      </>
     );
   }
 };

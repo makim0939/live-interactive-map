@@ -1,12 +1,29 @@
 import React from 'react';
+import { FieldValues, Path, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-const NumberInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
-  const { className, ...inputAttrs } = props;
+type NumberInputProps<T extends FieldValues> = React.InputHTMLAttributes<HTMLInputElement> & {
+  name: Path<T>;
+  register?: UseFormRegister<T>;
+  registerOptions?: RegisterOptions<T, Path<T>>;
+};
+
+const NumberInput = <T extends FieldValues>(props: NumberInputProps<T>) => {
+  const { className, register, registerOptions, ...inputAttrs } = props;
   return (
-    <input
-      {...inputAttrs}
-      className={` w-16 p-1 border border-borderlightgray  ${className || ''}`}
-    />
+    <>
+      {register ? (
+        <input
+          {...inputAttrs}
+          {...register(inputAttrs.name, registerOptions)}
+          className={` w-16 p-1 border border-borderlightgray  ${className || ''}`}
+        />
+      ) : (
+        <input
+          {...inputAttrs}
+          className={` w-16 p-1 border border-borderlightgray  ${className || ''}`}
+        />
+      )}
+    </>
   );
 };
 

@@ -53,18 +53,16 @@ const Draggable = ({
   }, [handleMouseMove]);
 
   return (
-    <div>
-      <div
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        style={{
-          transform: `translate(${position.x}px, ${position.y}px)`,
-        }}
-        className=" absolute top-0 left-0 w-fit z-10 cursor-pointer origin-top-left"
-      >
-        {children}
-      </div>
+    <div
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      style={{
+        transform: `translate(${position.x}px, ${position.y}px)`,
+      }}
+      className=" absolute top-0 left-0 w-fit z-10 cursor-pointer origin-top-left"
+    >
+      {children}
     </div>
   );
 };

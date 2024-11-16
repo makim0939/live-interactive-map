@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Rect } from '../types';
+import { useAtom } from 'jotai';
+import { contentsRectAtom, ratioAtom } from '../atoms';
 
 const useContentsScaling = () => {
-  const [contentsRect, setContentsRect] = useState<Rect>({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
-  });
-  const [ratio, setRatio] = useState(1);
+  const [contentsRect, setContentsRect] = useAtom<Rect>(contentsRectAtom);
+  const [ratio, setRatio] = useAtom(ratioAtom);
   useEffect(() => {
     const fitWindow = () => {
       const contents = document.getElementById('contents');
@@ -47,7 +44,7 @@ const useContentsScaling = () => {
       root.style.height = '100vh';
     }
     return () => removeEventListener('resize', fitWindow);
-  }, []);
+  }, [setRatio, setContentsRect]);
   return { ratio, contentsRect };
 };
 
