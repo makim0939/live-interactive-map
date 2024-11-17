@@ -5,10 +5,11 @@ import Button from '../ui/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Booth, BoothInsertProps } from '../../types';
 import { insertBooth } from '../../utils/supabaseFunctions';
+import { BoothFormState } from './BoothSettings';
 
 type BoothFormProps = {
   hookForm: UseFormReturn<BoothInsertProps, undefined>
-  setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenForm: React.Dispatch<React.SetStateAction<BoothFormState>>
 };
 
 const BoothForm = (props: BoothFormProps) => {
@@ -34,7 +35,7 @@ const {
     console.log(data);
     mutation.mutate(data);
     reset();
-    props.setIsFormOpen(false);
+    props.setOpenForm("none");
   };
 
   return (

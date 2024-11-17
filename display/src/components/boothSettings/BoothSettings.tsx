@@ -8,11 +8,11 @@ import { BoothInsertProps } from '../../types'
 import { useState } from 'react'
 import Draggable from '../ui/Draggable'
 
-
+export type BoothFormState = "none"| "add" | "edit";
 const BoothSettings = () => {
     const hookForm = useForm<BoothInsertProps>();
     const boothsQuery = useQuery({ queryKey: ['booths'], queryFn: selectAllBooths });
-    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [openForm, setOpenForm] = useState<BoothFormState>("none");
     const [selectedBoothId, setSelectedBoothId] = useState(-1);
     
     
@@ -20,13 +20,11 @@ const BoothSettings = () => {
     <div className=' absolute top-0 left-0'>
         <Draggable>
             <div className=' flex bg-slate-50 '>
-                <BoothList booths={boothsQuery.data || []} setSelectedBoothId={setSelectedBoothId} isFormOpenState={[isFormOpen, setIsFormOpen]} /> 
-                {isFormOpen && <BoothForm hookForm={hookForm}  setIsFormOpen={setIsFormOpen}   />}
+                <BoothList booths={boothsQuery.data || []} setSelectedBoothId={setSelectedBoothId} openFormState={[openForm, setOpenForm]} /> 
+                {openForm === "add" && <BoothForm hookForm={hookForm}  setOpenForm={setOpenForm}   />}
             </div>
         </Draggable>
-        
-      
-      <BoothRectStage boothRects={boothsQuery.data|| []} hookForm={hookForm} isFormOpen={isFormOpen} selectedBoothId={selectedBoothId} />
+      <BoothRectStage boothRects={boothsQuery.data|| []} hookForm={hookForm} openForm={openForm} selectedBoothId={selectedBoothId} />
     </div>
   )
 }

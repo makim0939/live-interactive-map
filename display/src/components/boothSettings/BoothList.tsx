@@ -2,28 +2,29 @@ import AddIcon from '../icon/AddIcon';
 import BoothListItem from './BoothListItem';
 import ArrowBackwardIcon from '../icon/ArrowBackwardIcon';
 import { Booth } from '../../types';
+import { BoothFormState } from './BoothSettings';
 
 type BoothListProps = {
   booths: Booth[];
-  isFormOpenState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+  openFormState: [BoothFormState, React.Dispatch<React.SetStateAction<BoothFormState>>];
   setSelectedBoothId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const BoothList = (props: BoothListProps) => {
-  const [isFormOpen, setIsFormOpen] = props.isFormOpenState;
+  const [openForm, setOpenForm] = props.openFormState;
   const onAddButtonClick = () => {
     props.setSelectedBoothId(-1);
-    setIsFormOpen(true);
+    setOpenForm("add");
   };
   const onBackButtonClick = () => {
-    setIsFormOpen(false);
+    setOpenForm("none");
   };
 
   return (
     <div className=" w-60 min-h-[508px] p-4 ">
       <div className=" flex items-center justify-between ">
         <h2 className=" text-center text-2xl font-semibold">ブース</h2>
-        {isFormOpen ? (
+        {openForm !== "none" ? (
           <button onClick={onBackButtonClick}>
             <ArrowBackwardIcon />
           </button>
@@ -36,7 +37,7 @@ const BoothList = (props: BoothListProps) => {
       <ul>
         {props.booths.map((booth, i) => (
           <div key={i}>
-            <BoothListItem booth={booth} setIsFormOpen={setIsFormOpen}  setSelectedBoothId={props.setSelectedBoothId} />
+            <BoothListItem booth={booth} setOpenForm={setOpenForm}  setSelectedBoothId={props.setSelectedBoothId} />
           </div>
         ))}
       </ul>

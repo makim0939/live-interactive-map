@@ -2,16 +2,18 @@ import { useState } from 'react';
 import MoreIcon from '../icon/MoreIcon';
 import ToggleIcon from '../icon/ToggleIcon copy';
 import { Booth } from '../../types';
+import { BoothFormState } from './BoothSettings';
 
 type BoothListItemProps = {
   booth: Booth
-  setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>; 
+  setOpenForm: React.Dispatch<React.SetStateAction<BoothFormState>>; 
   setSelectedBoothId: React.Dispatch<React.SetStateAction<number>>;
 };
 const BoothListItem = (props: BoothListItemProps) => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const onBoothNameClick = ()=> {
     props.setSelectedBoothId(props.booth.id)
+    props.setOpenForm("none")
   }
   return (
     <li className=" my-4 w-full  ">

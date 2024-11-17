@@ -4,12 +4,13 @@ import { contentsRectAtom } from '../../atoms';
 import { Booth, BoothInsertProps} from '../../types';
 import { UseFormReturn } from 'react-hook-form';
 import BoothRect from './BoothRect';
+import { BoothFormState } from './BoothSettings';
 
 
 type BoothRectStageProps = {
     boothRects: Omit<Booth, "name" |"description">[];
     hookForm: UseFormReturn<BoothInsertProps, undefined>
-    isFormOpen: boolean; 
+    openForm: BoothFormState; 
     selectedBoothId: number;
 }   
 const BoothRectStage = (props: BoothRectStageProps) => {
@@ -22,7 +23,7 @@ const BoothRectStage = (props: BoothRectStageProps) => {
           {props.boothRects.map((boothRect, i) => (
               <BoothRect key={i} rect={boothRect} selected={boothRect.id === props.selectedBoothId} setValue={setValue} />
           ))}
-          {props.isFormOpen && <BoothRect rect={{left: 0, top: 0, width: 100, height: 100}} selected={true} setValue={setValue} />}
+          {props.openForm === "add" && <BoothRect rect={{left: 0, top: 0, width: 100, height: 100}} selected={true} setValue={setValue} />}
         </Layer>
       </Stage>
     </div>
