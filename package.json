@@ -1,24 +1,24 @@
 {
-	"name": "live-interactive-map",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"prepare": "husky",
-		"lint": "npx @biomejs/biome lint --write ",
-		"format": "npx @biomejs/biome format --write ",
-		"check": "npx @biomejs/biome check --write "
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"husky": "^9.1.6",
-		"lint-staged": "^15.2.10"
-	},
-	"lint-staged": {
-		".{js,jsx,ts,tsx}": ["biome check --write --no-errors-on-unmatched"]
-	}
+  "name": "live-interactive-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "lint": "npx @biomejs/biome lint --write ",
+    "format": "npx @biomejs/biome format --write ",
+    "check": "npx @biomejs/biome check --write "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10"
+  },
+  "lint-staged": {
+    ".{js,jsx,ts,tsx}": ["biome check --write --no-errors-on-unmatched"]
+  }
 }
