@@ -13,7 +13,7 @@ const BoothListItem = (props: BoothListItemProps) => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const onBoothNameClick = () => {
     props.setSelectedBoothId(props.booth.id);
-    props.setOpenForm("none");
+    props.setOpenForm("edit");
   };
   return (
     <li className=" my-4 w-full  ">

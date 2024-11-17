@@ -17,6 +17,7 @@ const BoothList = (props: BoothListProps) => {
     setOpenForm("add");
   };
   const onBackButtonClick = () => {
+    props.setSelectedBoothId(-1);
     setOpenForm("none");
   };
 

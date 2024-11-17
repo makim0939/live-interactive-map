@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import type { UseFormReturn } from "react-hook-form";
+import { type UseFormReturn, set } from "react-hook-form";
 import useBoothMutation from "../../hooks/useBoothMutation";
+import useUpdateBoothMutation from "../../hooks/useUpdateBoothMutation";
 import type { Booth, BoothInsertProps } from "../../types";
 import { insertBooth } from "../../utils/supabaseFunctions";
 import Button from "../ui/Button";
@@ -9,31 +10,43 @@ import NumberInput from "../ui/NumberInput";
 import TextInput from "../ui/TextInput";
 import type { BoothFormState } from "./BoothSettings";
 
-type AddBoothFormProps = {
+type EditBoothFormProps = {
   hookForm: UseFormReturn<BoothInsertProps, undefined>;
   setOpenForm: React.Dispatch<React.SetStateAction<BoothFormState>>;
+  booth: Booth;
+  setSelectBoothId: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const AddBoothForm = (props: AddBoothFormProps) => {
+const EditBoothForm = (props: EditBoothFormProps) => {
   const {
     register,
     handleSubmit,
     reset,
-    watch,
+    setValue,
     // formState: { errors },
   } = props.hookForm;
 
-  const mutation = useBoothMutation();
+  const mutation = useUpdateBoothMutation();
   const onValid = (data: BoothInsertProps) => {
-    mutation.mutate(data);
+    const updateData = { id: props.booth.id, ...data };
+    mutation.mutate(updateData);
     reset();
+    props.setSelectBoothId(-1);
     props.setOpenForm("none");
   };
 
+  useEffect(() => {
+    setValue("name", props.booth.name);
+    setValue("description", props.booth.description);
+    setValue("left", props.booth.left);
+    setValue("top", props.booth.top);
+    setValue("width", props.booth.width);
+    setValue("height", props.booth.height);
+  }, [props.booth, setValue]);
   return (
     <>
       <div id="form" className="  w-96 p-4 ">
-        <h2 className=" text-2xl font-semibold">ブースを追加</h2>
+        <h2 className=" text-2xl font-semibold">ブースを編集</h2>
         <form onSubmit={handleSubmit(onValid)} className=" flex flex-col ">
           <div className=" flex flex-col my-4 ">
             <label htmlFor="name">ブース名</label>
@@ -41,6 +54,7 @@ const AddBoothForm = (props: AddBoothFormProps) => {
               name="name"
               id="name"
               type="text"
+              placeholder={props.booth.name}
               register={register}
               registerOptions={{ required: true }}
             />
@@ -129,4 +143,4 @@ const AddBoothForm = (props: AddBoothFormProps) => {
   );
 };
 
-export default AddBoothForm;
+export default EditBoothForm;

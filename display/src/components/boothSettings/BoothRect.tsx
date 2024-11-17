@@ -1,30 +1,60 @@
 import type Konva from "konva";
 import { useEffect, useRef } from "react";
-import type { UseFormSetValue } from "react-hook-form";
+import type { UseFormReturn, UseFormSetValue } from "react-hook-form";
 import { Rect, Transformer } from "react-konva";
 import type { BoothInsertProps, Rect as RectProps } from "../../types";
+import { BoothFormState } from "./BoothSettings";
 
 type BoothRectProps = {
+  hookForm: UseFormReturn<BoothInsertProps, undefined>;
   rect: RectProps;
   selected?: boolean;
-  setValue: UseFormSetValue<BoothInsertProps>;
+  rectLength: number;
+  openForm: BoothFormState;
 };
 const BoothRect = (props: BoothRectProps) => {
   const shapeRef = useRef<Konva.Rect>(null);
   const trRef = useRef<Konva.Transformer>(null);
   const { left, top, width, height } = props.rect;
+  const { watch, setValue, reset } = props.hookForm;
 
   useEffect(() => {
+    if (!shapeRef.current) return;
+    if (props.openForm === "none") {
+      console.log("reset");
+      const x = props.rect.left;
+      const y = props.rect.top;
+      const width = props.rect.width;
+      const height = props.rect.height;
+      shapeRef.current.setAttrs({ x, y, width, height });
+      reset();
+    }
+    if (!trRef.current) return;
     if (!props.selected) return;
-    if (!trRef.current || !shapeRef.current) return;
     trRef.current.nodes([shapeRef.current]);
-  }, [props.selected]);
+    shapeRef.current.setZIndex(props.rectLength);
+    trRef.current.setZIndex(props.rectLength);
+
+    const watchInputs = watch((value, { name, type }) => {
+      if (!trRef.current || !shapeRef.current) return;
+      if (name === "left" || name === "top" || name === "width" || name === "height") {
+        const { left, top, width, height } = value;
+        const x = Number(left);
+        const y = Number(top);
+        const w = Number(width);
+        const h = Number(height);
+        shapeRef.current.setAttrs({ x, y, width: w, height: h });
+        // shapeRef.current.getLayer()?.batchDraw();
+      }
+    });
+    return () => watchInputs.unsubscribe();
+  }, [props.selected, props.rectLength, props.rect, props.openForm, watch, reset]);
 
   const setValues = (x: number, y: number, w: number, h: number) => {
-    props.setValue("left", Math.round(x));
-    props.setValue("top", Math.round(y));
-    props.setValue("width", Math.round(w));
-    props.setValue("height", Math.round(h));
+    setValue("left", Math.round(x));
+    setValue("top", Math.round(y));
+    setValue("width", Math.round(w));
+    setValue("height", Math.round(h));
   };
   const handleDragEnd = () => {
     if (!shapeRef.current) return;
