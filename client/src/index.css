@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 :root {
-  color: 252528;
+  letter-spacing: 0.06em;
+  color: #252528;
 }
