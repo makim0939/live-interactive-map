@@ -8,7 +8,7 @@
 		"prepare": "husky",
 		"lint": "npx @biomejs/biome lint --write ",
 		"format": "npx @biomejs/biome format --write ",
-		"check": "npx @biomejs/biome check"
+		"check": "npx @biomejs/biome check --write "
 	},
 	"keywords": [],
 	"author": "",
