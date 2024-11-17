@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import type { UseFormReturn, UseFormSetValue } from "react-hook-form";
 import { Rect, Transformer } from "react-konva";
 import type { BoothInsertProps, Rect as RectProps } from "../../types";
-import { BoothFormState } from "./BoothSettings";
+import type { BoothFormState } from "./BoothSettings";
 
 type BoothRectProps = {
   hookForm: UseFormReturn<BoothInsertProps, undefined>;
