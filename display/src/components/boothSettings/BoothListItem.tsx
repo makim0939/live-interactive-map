@@ -1,37 +1,37 @@
 import { useState } from 'react';
 import MoreIcon from '../icon/MoreIcon';
 import ToggleIcon from '../icon/ToggleIcon copy';
+import { Booth } from '../../types';
 
 type BoothListItemProps = {
-  i: number;
-  boothName: string;
-  boothDescription: string;
+  booth: Booth
+  setIsFormOpen: React.Dispatch<React.SetStateAction<boolean>>; 
+  setSelectedBoothId: React.Dispatch<React.SetStateAction<number>>;
 };
-
 const BoothListItem = (props: BoothListItemProps) => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-
+  const onBoothNameClick = ()=> {
+    props.setSelectedBoothId(props.booth.id)
+  }
   return (
     <li className=" my-4 w-full  ">
       <div className=" flex items-center ">
-        <button className=" mr-1 " onClick={() => setIsToggleOpen(!isToggleOpen)}>
+        <button type='button' className=" mr-2 " onClick={() => setIsToggleOpen(!isToggleOpen)}>
           <ToggleIcon
             style={isToggleOpen ? { width: 13, transform: 'rotate(90deg)' } : { width: 13 }}
           />
         </button>
 
-        <p
-          className=" w-full mr-2 truncate hover:underline decoration-textlightgray"
-          onClick={() => console.log(props.boothName, 'clicked')}
-        >
-          {props.boothName}
-        </p>
+        <button type='button' onClick={onBoothNameClick} className=' w-full mr-2 pr-2 text-left truncate hover:underline decoration-textlightgray'>
+          {props.booth.name} 
+        </button>
+        
 
         <MoreIcon style={{ fill: '#757578', width: 32, height: 32 }} />
       </div>
       {isToggleOpen && (
         <div className=" w-full max-h-16 ml-4 text-sm ">
-          <p className=" text-textgray ">{props.boothDescription}</p>
+          <p className=" text-textgray ">{props.booth.description}</p>
         </div>
       )}
     </li>

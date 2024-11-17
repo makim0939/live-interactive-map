@@ -6,13 +6,13 @@ import { Booth } from '../../types';
 type BoothListProps = {
   booths: Booth[];
   isFormOpenState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-  selectedRectState: [number, React.Dispatch<React.SetStateAction<number>>];
+  setSelectedBoothId: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const BoothList = (props: BoothListProps) => {
   const [isFormOpen, setIsFormOpen] = props.isFormOpenState;
-  const [selectedRect, setSelectedRect ] = props.selectedRectState;
   const onAddButtonClick = () => {
+    props.setSelectedBoothId(-1);
     setIsFormOpen(true);
   };
   const onBackButtonClick = () => {
@@ -36,7 +36,7 @@ const BoothList = (props: BoothListProps) => {
       <ul>
         {props.booths.map((booth, i) => (
           <div key={i}>
-            <BoothListItem boothName={booth.name} boothDescription={booth.description} i={i} />
+            <BoothListItem booth={booth} setIsFormOpen={setIsFormOpen}  setSelectedBoothId={props.setSelectedBoothId} />
           </div>
         ))}
       </ul>

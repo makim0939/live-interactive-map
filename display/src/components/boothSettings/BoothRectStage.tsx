@@ -1,14 +1,16 @@
 import { useAtom } from 'jotai';
 import { Layer, Stage } from 'react-konva'
 import { contentsRectAtom } from '../../atoms';
-import { BoothInsertProps, Rect as RectProps } from '../../types';
+import { Booth, BoothInsertProps} from '../../types';
 import { UseFormReturn } from 'react-hook-form';
 import BoothRect from './BoothRect';
 
+
 type BoothRectStageProps = {
-    boothRects: RectProps[];
+    boothRects: Omit<Booth, "name" |"description">[];
     hookForm: UseFormReturn<BoothInsertProps, undefined>
     isFormOpen: boolean; 
+    selectedBoothId: number;
 }   
 const BoothRectStage = (props: BoothRectStageProps) => {
     const [contentsRect,] = useAtom(contentsRectAtom);
@@ -17,10 +19,8 @@ const BoothRectStage = (props: BoothRectStageProps) => {
     <div className=' absolute left-0 top-0 z-0' style={{transform: `translate(${contentsRect.left}px, ${contentsRect.top}px)`}}>
        <Stage width={contentsRect.width} height={contentsRect.height}>
         <Layer>
-          {props.boothRects.map((rect, i) => (
-            <>
-              <BoothRect key={i} rect={rect} selected={false} setValue={setValue} />
-            </>
+          {props.boothRects.map((boothRect, i) => (
+              <BoothRect key={i} rect={boothRect} selected={boothRect.id === props.selectedBoothId} setValue={setValue} />
           ))}
           {props.isFormOpen && <BoothRect rect={{left: 0, top: 0, width: 100, height: 100}} selected={true} setValue={setValue} />}
         </Layer>
