@@ -6,11 +6,13 @@ const ToggleIcon = ({ style }: { style?: React.CSSProperties }) => {
       viewBox="0 0 24 24"
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
-      style={{ transition: '.1s', ...style }}
+      style={{ transition: ".1s", ...style }}
+      role="img"
+      aria-label="Toggle"
     >
       <mask
         id="mask0_9_432"
-        style={{ maskType: 'alpha' }}
+        style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x="0"
         y="0"

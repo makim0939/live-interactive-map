@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { Rect } from '../types';
-import { useAtom } from 'jotai';
-import { contentsRectAtom, ratioAtom } from '../atoms';
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { contentsRectAtom, ratioAtom } from "../atoms";
+import type { Rect } from "../types";
 
 const useContentsScaling = () => {
   const [contentsRect, setContentsRect] = useAtom<Rect>(contentsRectAtom);
   const [ratio, setRatio] = useAtom(ratioAtom);
   useEffect(() => {
     const fitWindow = () => {
-      const contents = document.getElementById('contents');
+      const contents = document.getElementById("contents");
       if (!contents) return;
       const ratioW = innerWidth / contents.scrollWidth;
       const ratioH = innerHeight / contents.scrollHeight;
@@ -22,8 +22,8 @@ const useContentsScaling = () => {
       } else {
         const transformOrigin =
           ratioW <= ratioH
-            ? '0 ' + (innerHeight - contents.scrollHeight * ratio) / 2 + 'px'
-            : (innerWidth - contents.scrollWidth * ratio) / 2 + 'px 0';
+            ? `0 ${(innerHeight - contents.scrollHeight * ratio) / 2}px`
+            : `${(innerWidth - contents.scrollWidth * ratio) / 2}px 0`;
         contents.style.transform = `scale(${ratio})`;
         contents.style.transformOrigin = transformOrigin;
       }
@@ -37,13 +37,13 @@ const useContentsScaling = () => {
       setRatio(ratio);
     };
     fitWindow();
-    addEventListener('resize', fitWindow);
-    const root = document.getElementById('root');
+    addEventListener("resize", fitWindow);
+    const root = document.getElementById("root");
     if (root) {
-      root.style.width = '100vw';
-      root.style.height = '100vh';
+      root.style.width = "100vw";
+      root.style.height = "100vh";
     }
-    return () => removeEventListener('resize', fitWindow);
+    return () => removeEventListener("resize", fitWindow);
   }, [setRatio, setContentsRect]);
   return { ratio, contentsRect };
 };

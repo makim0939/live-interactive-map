@@ -5,7 +5,7 @@
 - ブースの中心と画面の中心の距離が最も近いブースをBoothInViewportとして判定する.
   その距離がブースの対角線の長さより大きい場合undefined.
 */
-import { BoothInfo, Rect } from './types';
+import type { BoothInfo, Rect } from "./types";
 
 const THRESHOLD_OCCUPANCY = 0.3;
 
@@ -64,9 +64,7 @@ const getBoothInViewportByOccupancy = (
 };
 const getBoothInViewportByDistance = (booths: BoothInfo[], viewRect: Rect) => {
   const checkBoothInView = (dist: number) => {
-    const viewportDiagonalLength = Math.sqrt(
-      Math.pow(viewRect.width, 2) + Math.pow(viewRect.height, 2),
-    );
+    const viewportDiagonalLength = Math.sqrt(viewRect.width ** 2 + viewRect.height ** 2);
     return dist < viewportDiagonalLength / 2;
   };
   const viewportCenter = {
@@ -79,7 +77,7 @@ const getBoothInViewportByDistance = (booths: BoothInfo[], viewRect: Rect) => {
       y: booth.area.top + booth.area.height / 2,
     };
     return Math.sqrt(
-      Math.pow(boothCenter.x - viewportCenter.x, 2) + Math.pow(boothCenter.y - viewportCenter.y, 2),
+      (boothCenter.x - viewportCenter.x) ** 2 + (boothCenter.y - viewportCenter.y) ** 2,
     );
   });
   const minDist = Math.min(...dists);

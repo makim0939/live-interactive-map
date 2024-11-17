@@ -1,4 +1,4 @@
-import React from 'react';
+import type React from "react";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string;
@@ -8,7 +8,7 @@ const Button = (props: ButtonProps) => {
   return (
     <button
       {...buttonAttrs}
-      className={`w-fit px-4 py-1 rounded-sm bg-blue-600 text-white ${className || ''}`}
+      className={`w-fit px-4 py-1 rounded-sm bg-blue-600 text-white ${className || ""}`}
     >
       {text}
     </button>

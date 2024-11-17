@@ -9,4 +9,4 @@ export type Booth = {
   width: number;
   height: number;
 };
-export type BoothInsertProps = Omit<Booth, 'id'>;
+export type BoothInsertProps = Omit<Booth, "id">;

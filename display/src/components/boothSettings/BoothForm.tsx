@@ -1,24 +1,24 @@
-import { UseFormReturn } from 'react-hook-form';
-import TextInput from '../ui/TextInput';
-import NumberInput from '../ui/NumberInput';
-import Button from '../ui/Button';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Booth, BoothInsertProps } from '../../types';
-import { insertBooth } from '../../utils/supabaseFunctions';
-import { BoothFormState } from './BoothSettings';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import type { UseFormReturn } from "react-hook-form";
+import type { Booth, BoothInsertProps } from "../../types";
+import { insertBooth } from "../../utils/supabaseFunctions";
+import Button from "../ui/Button";
+import NumberInput from "../ui/NumberInput";
+import TextInput from "../ui/TextInput";
+import type { BoothFormState } from "./BoothSettings";
 
 type BoothFormProps = {
-  hookForm: UseFormReturn<BoothInsertProps, undefined>
-  setOpenForm: React.Dispatch<React.SetStateAction<BoothFormState>>
+  hookForm: UseFormReturn<BoothInsertProps, undefined>;
+  setOpenForm: React.Dispatch<React.SetStateAction<BoothFormState>>;
 };
 
 const BoothForm = (props: BoothFormProps) => {
-const {
-  register,
-  handleSubmit,
-  reset,
-  // formState: { errors },
-} = props.hookForm;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    // formState: { errors },
+  } = props.hookForm;
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -27,7 +27,7 @@ const {
     },
     onSuccess: (result) => {
       if (!result) return;
-      queryClient.setQueryData<Booth[]>(['booths'], (old) => (old ? [...old, result] : [result]));
+      queryClient.setQueryData<Booth[]>(["booths"], (old) => (old ? [...old, result] : [result]));
     },
   });
 

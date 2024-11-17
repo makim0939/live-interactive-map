@@ -1,8 +1,8 @@
-import { Booth, BoothInsertProps } from '../types';
-import { supabase } from './supabaseClient';
+import type { Booth, BoothInsertProps } from "../types";
+import { supabase } from "./supabaseClient";
 
 export const selectAllBooths = async (): Promise<Booth[] | undefined> => {
-  const { data: booths, error } = await supabase.from('booths').select('*');
+  const { data: booths, error } = await supabase.from("booths").select("*");
   if (error) {
     console.error(error);
     return undefined;
@@ -11,7 +11,7 @@ export const selectAllBooths = async (): Promise<Booth[] | undefined> => {
 };
 
 export const insertBooth = async (insertData: BoothInsertProps): Promise<Booth | undefined> => {
-  const { data: booth, error } = await supabase.from('booths').insert(insertData).select().single();
+  const { data: booth, error } = await supabase.from("booths").insert(insertData).select().single();
   if (error) {
     console.error(error);
     return undefined;

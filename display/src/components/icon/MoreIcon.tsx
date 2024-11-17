@@ -7,10 +7,12 @@ const MoreIcon = ({ style }: { style?: React.CSSProperties }) => {
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
       style={style}
+      role="img"
+      aria-label="More"
     >
       <mask
         id="mask0_6_650"
-        style={{ maskType: 'alpha' }}
+        style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x="0"
         y="0"

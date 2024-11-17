@@ -1,4 +1,4 @@
-import { BoothInfo } from './types';
+import type { BoothInfo } from "./types";
 
 const addDummyBooths = (booths: BoothInfo[]) => {
   const boothAreas = [

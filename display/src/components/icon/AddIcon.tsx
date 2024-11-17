@@ -7,6 +7,8 @@ const AddIcon = ({ style }: { style?: React.CSSProperties }) => {
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
       style={style}
+      role="img"
+      aria-label="Add"
     >
       <g clipPath="url(#clip0_9_435)">
         <path d="M21 11.2H12.7V3H11.2V11.2H3V12.7H11.2V21H12.7V12.7H21V11.2Z" />

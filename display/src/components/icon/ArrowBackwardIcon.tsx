@@ -7,6 +7,8 @@ const ArrowBackwardIcon = ({ style }: { style?: React.CSSProperties }) => {
       fill="#252528"
       xmlns="http://www.w3.org/2000/svg"
       style={style}
+      role="img"
+      aria-label="Backward"
     >
       <mask id="mask0_20_447" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
         <rect x="24" y="24" width="24" height="24" transform="rotate(-180 24 24)" fill="#D9D9D9" />

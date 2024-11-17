@@ -1,8 +1,8 @@
-import AddIcon from '../icon/AddIcon';
-import BoothListItem from './BoothListItem';
-import ArrowBackwardIcon from '../icon/ArrowBackwardIcon';
-import { Booth } from '../../types';
-import { BoothFormState } from './BoothSettings';
+import type { Booth } from "../../types";
+import AddIcon from "../icon/AddIcon";
+import ArrowBackwardIcon from "../icon/ArrowBackwardIcon";
+import BoothListItem from "./BoothListItem";
+import type { BoothFormState } from "./BoothSettings";
 
 type BoothListProps = {
   booths: Booth[];
@@ -25,19 +25,23 @@ const BoothList = (props: BoothListProps) => {
       <div className=" flex items-center justify-between ">
         <h2 className=" text-center text-2xl font-semibold">ブース</h2>
         {openForm !== "none" ? (
-          <button onClick={onBackButtonClick}>
+          <button type="button" onClick={onBackButtonClick}>
             <ArrowBackwardIcon />
           </button>
         ) : (
-          <button onClick={onAddButtonClick}>
+          <button type="button" onClick={onAddButtonClick}>
             <AddIcon />
           </button>
         )}
       </div>
       <ul>
-        {props.booths.map((booth, i) => (
-          <div key={i}>
-            <BoothListItem booth={booth} setOpenForm={setOpenForm}  setSelectedBoothId={props.setSelectedBoothId} />
+        {props.booths.map((booth) => (
+          <div key={booth.id}>
+            <BoothListItem
+              booth={booth}
+              setOpenForm={setOpenForm}
+              setSelectedBoothId={props.setSelectedBoothId}
+            />
           </div>
         ))}
       </ul>

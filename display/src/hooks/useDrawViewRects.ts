@@ -1,14 +1,20 @@
-import { useEffect } from 'react';
-import { Socket } from 'socket.io-client';
-import { ClientCanvas } from '../types';
+import { useEffect } from "react";
+import type { Socket } from "socket.io-client";
+import type { ClientCanvas } from "../types";
 
-type ViewRect = { left: number; top: number; width: number; height: number; color: string };
+type ViewRect = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  color: string;
+};
 const useDrawingViewRects = (ratio: number, clientCanvases: ClientCanvas[], socket?: Socket) => {
   useEffect(() => {
     if (!socket) return;
-    socket.on('view-rect', ({ clientId, viewRect }: { clientId: string; viewRect: ViewRect }) => {
+    socket.on("view-rect", ({ clientId, viewRect }: { clientId: string; viewRect: ViewRect }) => {
       const canvas = clientCanvases.find((ctx) => ctx.id === clientId)?.canvas;
-      const ctx = canvas?.getContext('2d');
+      const ctx = canvas?.getContext("2d");
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.strokeStyle = viewRect.color;
@@ -21,7 +27,7 @@ const useDrawingViewRects = (ratio: number, clientCanvases: ClientCanvas[], sock
       );
     });
     return () => {
-      socket.off('view-rect');
+      socket.off("view-rect");
     };
   }, [socket, ratio, clientCanvases]);
 };

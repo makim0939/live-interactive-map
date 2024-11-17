@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
-import { BoothInfo } from './types.ts';
-import sendViewRect from './socketio/sendViewRect';
-import getBoothInViewport from './getBoothInViewport.ts';
-import { addDummyBooths } from './debugFunctinos.ts';
-import MapContents from './components/MapContents';
-import BoothCard from './components/BoothCard.tsx';
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import BoothCard from "./components/BoothCard.tsx";
+import MapContents from "./components/MapContents";
+import { addDummyBooths } from "./debugFunctinos.ts";
+import getBoothInViewport from "./getBoothInViewport.ts";
+import sendViewRect from "./socketio/sendViewRect";
+import type { BoothInfo } from "./types.ts";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL as string;
 const socket = io(SERVER_URL, {
   extraHeaders: {
-    'ngrok-skip-browser-warning': 'true',
+    "ngrok-skip-browser-warning": "true",
   },
 });
 
 const booths: BoothInfo[] = [];
-socket.on('booth', (booth: BoothInfo) => {
+socket.on("booth", (booth: BoothInfo) => {
   booths.push(booth);
 });
 
@@ -27,17 +27,22 @@ function App() {
     //
 
     const handleScroll = () => {
-      const viewRect = { left: scrollX, top: scrollY, width: innerWidth, height: innerHeight };
+      const viewRect = {
+        left: scrollX,
+        top: scrollY,
+        width: innerWidth,
+        height: innerHeight,
+      };
       sendViewRect(socket, viewRect);
       const booth = getBoothInViewport(booths, viewRect);
       setBoothInViewport(booth);
     };
-    addEventListener('scroll', handleScroll);
+    addEventListener("scroll", handleScroll);
     return () => {
       //DELETE:テスト用にダミーブースを削除
       booths.splice(0);
       //
-      removeEventListener('scroll', handleScroll);
+      removeEventListener("scroll", handleScroll);
     };
   }, []);
   return (
