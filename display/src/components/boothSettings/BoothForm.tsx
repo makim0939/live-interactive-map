@@ -1,4 +1,6 @@
+import { useAtom } from "jotai";
 import type { UseFormReturn } from "react-hook-form";
+import { ratioAtom } from "../../atoms";
 import useBoothMutation from "../../hooks/useBoothMutation";
 import type { BoothInsertProps } from "../../types";
 import Button from "../ui/Button";
@@ -12,6 +14,7 @@ type AddBoothFormProps = {
 };
 
 const AddBoothForm = (props: AddBoothFormProps) => {
+  const [ratio] = useAtom(ratioAtom);
   const {
     register,
     handleSubmit,
@@ -21,6 +24,10 @@ const AddBoothForm = (props: AddBoothFormProps) => {
 
   const mutation = useBoothMutation();
   const onValid = (data: BoothInsertProps) => {
+    data.left = data.left / ratio;
+    data.top = data.top / ratio;
+    data.width = data.width / ratio;
+    data.height = data.height / ratio;
     mutation.mutate(data);
     reset();
     props.setOpenForm("none");

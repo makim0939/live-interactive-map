@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ratioAtom } from "../../atoms";
 import type { BoothInsertProps } from "../../types";
 import { selectAllBooths } from "../../utils/supabaseFunctions";
 import Draggable from "../ui/Draggable";
@@ -11,10 +13,19 @@ import EditBoothForm from "./EditBoothForm";
 
 export type BoothFormState = "none" | "add" | "edit";
 const BoothSettings = () => {
+  const [ratio] = useAtom(ratioAtom);
   const hookForm = useForm<BoothInsertProps>();
   const boothsQuery = useQuery({
     queryKey: ["booths"],
     queryFn: selectAllBooths,
+    select: (data) =>
+      data?.map((booth) => ({
+        ...booth,
+        left: booth.left * ratio,
+        top: booth.top * ratio,
+        width: booth.width * ratio,
+        height: booth.height * ratio,
+      })),
   });
   const [openForm, setOpenForm] = useState<BoothFormState>("none");
   const [selectedBoothId, setSelectedBoothId] = useState(-1);
