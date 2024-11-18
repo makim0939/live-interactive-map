@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 :root {
   letter-spacing: 0.06em;
