@@ -29,10 +29,12 @@ const EditBoothForm = (props: EditBoothFormProps) => {
   const mutation = useUpdateBoothMutation();
   const onValid = (data: BoothInsertProps) => {
     const updateData = { id: props.booth.id, ...data };
-    mutation.mutate(updateData);
-    reset();
-    props.setSelectBoothId(-1);
-    props.setOpenForm("none");
+    const onSuccess = () => {
+      reset();
+      props.setSelectBoothId(-1);
+      props.setOpenForm("none");
+    };
+    mutation.mutate(updateData, { onSuccess });
   };
 
   useEffect(() => {
@@ -43,6 +45,7 @@ const EditBoothForm = (props: EditBoothFormProps) => {
     setValue("width", props.booth.width);
     setValue("height", props.booth.height);
   }, [props.booth, setValue]);
+
   return (
     <>
       <div id="form" className="  w-96 p-4 ">
@@ -54,7 +57,6 @@ const EditBoothForm = (props: EditBoothFormProps) => {
               name="name"
               id="name"
               type="text"
-              placeholder={props.booth.name}
               register={register}
               registerOptions={{ required: true }}
             />
@@ -135,7 +137,7 @@ const EditBoothForm = (props: EditBoothFormProps) => {
             </div>
           </div>
           <div className=" flex justify-end my-4">
-            <Button type="submit" text="追加" />
+            <Button type="submit" text="更新" />
           </div>
         </form>
       </div>

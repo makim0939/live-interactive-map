@@ -1,8 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
 import type Konva from "konva";
 import { useEffect, useRef } from "react";
 import type { UseFormReturn, UseFormSetValue } from "react-hook-form";
 import { Rect, Transformer } from "react-konva";
 import type { BoothInsertProps, Rect as RectProps } from "../../types";
+import { selectAllBooths } from "../../utils/supabaseFunctions";
 import type { BoothFormState } from "./BoothSettings";
 
 type BoothRectProps = {
@@ -21,7 +23,6 @@ const BoothRect = (props: BoothRectProps) => {
   useEffect(() => {
     if (!shapeRef.current) return;
     if (props.openForm === "none") {
-      console.log("reset");
       const x = props.rect.left;
       const y = props.rect.top;
       const width = props.rect.width;
@@ -75,6 +76,8 @@ const BoothRect = (props: BoothRectProps) => {
     setValues(x, y, w, h);
   };
 
+  const boothsQuery = useQuery({ queryKey: ["booths"] });
+  if (boothsQuery.isFetching) return;
   return (
     <>
       <Rect
