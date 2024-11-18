@@ -32,7 +32,7 @@ const BoothRect = (props: BoothRectProps) => {
     if (!trRef.current) return;
     if (!props.selected) return;
     trRef.current.nodes([shapeRef.current]);
-    shapeRef.current.setZIndex(props.rectLength);
+    shapeRef.current.setZIndex(props.rectLength - 1);
     trRef.current.setZIndex(props.rectLength);
 
     const watchInputs = watch((value, { name }) => {
@@ -72,6 +72,7 @@ const BoothRect = (props: BoothRectProps) => {
     const { x: scaleX, y: scaleY } = shapeRef.current.getAbsoluteScale();
     const w = width * scaleX;
     const h = height * scaleY;
+    shapeRef.current.scale({ x: 1, y: 1 });
     setValues(x, y, w, h);
   };
 
