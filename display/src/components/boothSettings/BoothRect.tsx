@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import type Konva from "konva";
 import { useEffect, useRef } from "react";
-import type { UseFormReturn, UseFormSetValue } from "react-hook-form";
+import type { UseFormReturn } from "react-hook-form";
 import { Rect, Transformer } from "react-konva";
 import type { BoothInsertProps, Rect as RectProps } from "../../types";
-import { selectAllBooths } from "../../utils/supabaseFunctions";
 import type { BoothFormState } from "./BoothSettings";
 
 type BoothRectProps = {
@@ -36,7 +35,7 @@ const BoothRect = (props: BoothRectProps) => {
     shapeRef.current.setZIndex(props.rectLength);
     trRef.current.setZIndex(props.rectLength);
 
-    const watchInputs = watch((value, { name, type }) => {
+    const watchInputs = watch((value, { name }) => {
       if (!trRef.current || !shapeRef.current) return;
       if (name === "left" || name === "top" || name === "width" || name === "height") {
         const { left, top, width, height } = value;

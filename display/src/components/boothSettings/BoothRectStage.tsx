@@ -14,7 +14,6 @@ type BoothRectStageProps = {
 };
 const BoothRectStage = (props: BoothRectStageProps) => {
   const [contentsRect] = useAtom(contentsRectAtom);
-  const { setValue } = props.hookForm;
   return (
     <div
       className=" absolute left-0 top-0 z-0"

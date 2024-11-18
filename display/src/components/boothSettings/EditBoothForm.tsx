@@ -1,10 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { type UseFormReturn, set } from "react-hook-form";
-import useBoothMutation from "../../hooks/useBoothMutation";
+import type { UseFormReturn } from "react-hook-form";
 import useUpdateBoothMutation from "../../hooks/useUpdateBoothMutation";
 import type { Booth, BoothInsertProps } from "../../types";
-import { insertBooth } from "../../utils/supabaseFunctions";
 import Button from "../ui/Button";
 import NumberInput from "../ui/NumberInput";
 import TextInput from "../ui/TextInput";

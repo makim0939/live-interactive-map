@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React from "react";
 import type { Booth, BoothInsertProps } from "../types";
 import { insertBooth } from "../utils/supabaseFunctions";
 

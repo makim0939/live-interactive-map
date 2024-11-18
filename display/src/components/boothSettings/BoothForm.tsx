@@ -1,9 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
 import type { UseFormReturn } from "react-hook-form";
 import useBoothMutation from "../../hooks/useBoothMutation";
-import type { Booth, BoothInsertProps } from "../../types";
-import { insertBooth } from "../../utils/supabaseFunctions";
+import type { BoothInsertProps } from "../../types";
 import Button from "../ui/Button";
 import NumberInput from "../ui/NumberInput";
 import TextInput from "../ui/TextInput";
@@ -19,7 +16,6 @@ const AddBoothForm = (props: AddBoothFormProps) => {
     register,
     handleSubmit,
     reset,
-    watch,
     // formState: { errors },
   } = props.hookForm;
 

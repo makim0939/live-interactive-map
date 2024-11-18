@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React from "react";
-import { type Booth, BoothInsertProps } from "../types";
-import { insertBooth, updateBooth } from "../utils/supabaseFunctions";
+import type { Booth } from "../types";
+import { updateBooth } from "../utils/supabaseFunctions";
 
 const useUpdateBoothMutation = () => {
   const queryClient = useQueryClient();
@@ -9,7 +8,7 @@ const useUpdateBoothMutation = () => {
     mutationFn: async (data: Booth) => {
       return await updateBooth(data);
     },
-    onSuccess: (result) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["booths"] });
     },
   });
