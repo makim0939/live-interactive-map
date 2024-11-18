@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ratioAtom } from "../../atoms";
 import type { BoothInsertProps } from "../../types";
+import { supabase } from "../../utils/supabaseClient";
 import { selectAllBooths } from "../../utils/supabaseFunctions";
 import Draggable from "../ui/Draggable";
 import BoothForm from "./BoothForm";
@@ -30,6 +31,30 @@ const BoothSettings = () => {
   const [openForm, setOpenForm] = useState<BoothFormState>("none");
   const [selectedBoothId, setSelectedBoothId] = useState(-1);
   const selectedBooth = boothsQuery.data?.find((booth) => booth.id === selectedBoothId);
+
+  const onClientFavorite = useCallback(() => {
+    console.log("onClientFavorite");
+  }, []);
+  useEffect(() => {
+    const channel = supabase.channel("favorites").on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "favorites",
+      },
+      onClientFavorite,
+    );
+
+    const subscribe = channel.subscribe();
+
+    return () => {
+      subscribe.unsubscribe().then((result) => {
+        if (result === "error") throw new Error("Failed to unsubscribe");
+        if (result === "timed out") throw new Error("Unsubscribe timed out");
+      });
+    };
+  }, [onClientFavorite]);
   return (
     <div className=" absolute top-0 left-0">
       <Draggable>
