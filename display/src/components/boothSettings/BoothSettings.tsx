@@ -7,6 +7,7 @@ import Draggable from "../ui/Draggable";
 import BoothForm from "./BoothForm";
 import BoothList from "./BoothList";
 import BoothRectStage from "./BoothRectStage";
+import EditBoothForm from "./EditBoothForm";
 
 export type BoothFormState = "none" | "add" | "edit";
 const BoothSettings = () => {
@@ -17,7 +18,7 @@ const BoothSettings = () => {
   });
   const [openForm, setOpenForm] = useState<BoothFormState>("none");
   const [selectedBoothId, setSelectedBoothId] = useState(-1);
-
+  const selectedBooth = boothsQuery.data?.find((booth) => booth.id === selectedBoothId);
   return (
     <div className=" absolute top-0 left-0">
       <Draggable>
@@ -28,6 +29,14 @@ const BoothSettings = () => {
             openFormState={[openForm, setOpenForm]}
           />
           {openForm === "add" && <BoothForm hookForm={hookForm} setOpenForm={setOpenForm} />}
+          {openForm === "edit" && selectedBooth && (
+            <EditBoothForm
+              hookForm={hookForm}
+              setOpenForm={setOpenForm}
+              booth={selectedBooth}
+              setSelectBoothId={setSelectedBoothId}
+            />
+          )}
         </div>
       </Draggable>
       <BoothRectStage

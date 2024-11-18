@@ -14,7 +14,6 @@ type BoothRectStageProps = {
 };
 const BoothRectStage = (props: BoothRectStageProps) => {
   const [contentsRect] = useAtom(contentsRectAtom);
-  const { setValue } = props.hookForm;
   return (
     <div
       className=" absolute left-0 top-0 z-0"
@@ -29,14 +28,18 @@ const BoothRectStage = (props: BoothRectStageProps) => {
               key={boothRect.id}
               rect={boothRect}
               selected={boothRect.id === props.selectedBoothId}
-              setValue={setValue}
+              hookForm={props.hookForm}
+              rectLength={props.boothRects.length}
+              openForm={props.openForm}
             />
           ))}
           {props.openForm === "add" && (
             <BoothRect
               rect={{ left: 0, top: 0, width: 100, height: 100 }}
               selected={true}
-              setValue={setValue}
+              hookForm={props.hookForm}
+              rectLength={props.boothRects.length}
+              openForm={props.openForm}
             />
           )}
         </Layer>
