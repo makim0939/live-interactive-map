@@ -1,7 +1,12 @@
 export type Rect = { top: number; left: number; width: number; height: number };
-export type BoothInfo = {
+export type ClientCanvas = { id: string; canvas: HTMLCanvasElement };
+export type Booth = {
   id: number;
-  title: string;
-  area: Rect;
+  name: string;
   description: string;
+  left: number;
+  top: number;
+  width: number;
+  height: number;
 };
+export type BoothInsertProps = Omit<Booth, "id">;

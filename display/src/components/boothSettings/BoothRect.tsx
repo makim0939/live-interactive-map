@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import type Konva from "konva";
 import { useEffect, useRef } from "react";
 import type { UseFormReturn } from "react-hook-form";
@@ -32,11 +31,18 @@ const BoothRect = (props: BoothRectProps) => {
     if (!trRef.current) return;
     if (!props.selected) return;
     trRef.current.nodes([shapeRef.current]);
-    shapeRef.current.setZIndex(props.rectLength - 1);
-    trRef.current.setZIndex(props.rectLength);
+    if (props.openForm === "edit") {
+      shapeRef.current.setZIndex(props.rectLength);
+      trRef.current.setZIndex(props.rectLength);
+    }
+    if (props.openForm === "add") {
+      shapeRef.current.setZIndex(props.rectLength);
+      trRef.current.setZIndex(props.rectLength + 1);
+    }
 
     const watchInputs = watch((value, { name }) => {
       if (!trRef.current || !shapeRef.current) return;
+
       if (name === "left" || name === "top" || name === "width" || name === "height") {
         const { left, top, width, height } = value;
         const x = Number(left);
@@ -76,8 +82,6 @@ const BoothRect = (props: BoothRectProps) => {
     setValues(x, y, w, h);
   };
 
-  const boothsQuery = useQuery({ queryKey: ["booths"] });
-  if (boothsQuery.isFetching) return;
   return (
     <>
       <Rect
