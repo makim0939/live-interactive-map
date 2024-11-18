@@ -4,7 +4,7 @@ const BoothCard = ({ name, description }: { name: string; description: string })
       <p className=" text-lg">
         <b>{name}</b>
       </p>
-      <p className=" text-textgray ">{description}</p>
+      <p className=" text-textgray truncate">{description}</p>
     </div>
   );
 };
