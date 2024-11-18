@@ -10,3 +10,5 @@ export type Booth = {
   height: number;
 };
 export type BoothInsertProps = Omit<Booth, "id">;
+export type Favorite = { id: number; booth_id: number };
+export type FavoriteInsertProps = Omit<Favorite, "id">;

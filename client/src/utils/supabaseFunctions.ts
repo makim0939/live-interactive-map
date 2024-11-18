@@ -1,4 +1,4 @@
-import type { Booth, BoothInsertProps } from "../types";
+import type { Booth, BoothInsertProps, Favorite, FavoriteInsertProps } from "../types";
 import { supabase } from "./supabaseClient";
 
 export const selectAllBooths = async (): Promise<Booth[]> => {
@@ -21,4 +21,14 @@ export const updateBooth = async (updateData: Booth): Promise<Booth[]> => {
     .select();
   if (error) throw new Error(error.message);
   return booths as Booth[];
+};
+
+export const insertFavorite = async (insertData: FavoriteInsertProps): Promise<Favorite> => {
+  const { data: favorite, error } = await supabase
+    .from("favorites")
+    .insert(insertData)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return favorite as Favorite;
 };
