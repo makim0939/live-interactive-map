@@ -71,7 +71,6 @@ const BoothSettings = () => {
           container.removeChild(favIcon);
         }, 2100);
       };
-      console.log("onClientFavorite", payload.new);
       if (!("booth_id" in payload.new)) return;
       favoriteAnimation(payload.new.booth_id);
     },
