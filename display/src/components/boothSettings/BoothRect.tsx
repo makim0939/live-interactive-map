@@ -25,7 +25,6 @@ type BoothRectProps = {
 
 const BoothRect = (props: BoothRectProps) => {
   const { setValue, reset, watch } = props.hookForm;
-
   const setValues = useCallback(
     (x: number, y: number, w: number, h: number) => {
       setValue("left", Math.round(x));
