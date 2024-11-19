@@ -63,6 +63,7 @@ const BoothSettings = () => {
             booths={boothsQuery.data || []}
             setSelectedBoothId={setSelectedBoothId}
             openFormState={[openForm, setOpenForm]}
+            reset={hookForm.reset}
           />
           {openForm === "add" && <BoothForm hookForm={hookForm} setOpenForm={setOpenForm} />}
           {openForm === "edit" && selectedBooth && (
