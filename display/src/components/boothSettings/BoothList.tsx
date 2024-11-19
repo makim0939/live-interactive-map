@@ -1,4 +1,5 @@
-import type { Booth } from "../../types";
+import type { UseFormReset } from "react-hook-form";
+import type { Booth, BoothInsertProps } from "../../types";
 import AddIcon from "../icon/AddIcon";
 import ArrowBackwardIcon from "../icon/ArrowBackwardIcon";
 import BoothListItem from "./BoothListItem";
@@ -8,6 +9,7 @@ type BoothListProps = {
   booths: Booth[];
   openFormState: [BoothFormState, React.Dispatch<React.SetStateAction<BoothFormState>>];
   setSelectedBoothId: React.Dispatch<React.SetStateAction<number>>;
+  reset: UseFormReset<BoothInsertProps>;
 };
 
 const BoothList = (props: BoothListProps) => {
@@ -19,6 +21,7 @@ const BoothList = (props: BoothListProps) => {
   const onBackButtonClick = () => {
     props.setSelectedBoothId(-1);
     setOpenForm("none");
+    props.reset();
   };
 
   return (

@@ -40,9 +40,7 @@ function App() {
   return (
     <>
       <MapContents />
-      {boothInViewport && (
-        <BoothCard name={boothInViewport.name} description={boothInViewport.description} />
-      )}
+      {boothInViewport && <BoothCard boothId={boothInViewport.id} {...boothInViewport} />}
     </>
   );
 }

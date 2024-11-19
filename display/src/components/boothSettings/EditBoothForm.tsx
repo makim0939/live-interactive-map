@@ -28,10 +28,10 @@ const EditBoothForm = (props: EditBoothFormProps) => {
 
   const mutation = useUpdateBoothMutation();
   const onValid = (data: BoothInsertProps) => {
-    data.left = data.left * ratio;
-    data.top = data.top * ratio;
-    data.width = data.width * ratio;
-    data.height = data.height * ratio;
+    data.left = data.left / ratio;
+    data.top = data.top / ratio;
+    data.width = data.width / ratio;
+    data.height = data.height / ratio;
     const updateData = { id: props.booth.id, ...data };
     const onSuccess = () => {
       reset();

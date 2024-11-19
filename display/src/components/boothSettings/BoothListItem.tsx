@@ -23,7 +23,6 @@ const BoothListItem = (props: BoothListItemProps) => {
             style={isToggleOpen ? { width: 13, transform: "rotate(90deg)" } : { width: 13 }}
           />
         </button>
-
         <button
           type="button"
           onClick={onBoothNameClick}

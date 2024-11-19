@@ -1,121 +1,69 @@
 import type Konva from "konva";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import type { UseFormReturn } from "react-hook-form";
-import { Rect, Transformer } from "react-konva";
-import type { BoothInsertProps, Rect as RectProps } from "../../types";
+import type { Booth, BoothInsertProps } from "../../types";
 import type { BoothFormState } from "./BoothSettings";
+import "./functions/boothRect";
+import {
+  createGroup,
+  createRect,
+  createTagLabel,
+  createText,
+  createTransformer,
+  handleDragEnd,
+  handleTransformEnd,
+} from "./functions/boothRect";
 
 type BoothRectProps = {
   hookForm: UseFormReturn<BoothInsertProps, undefined>;
-  rect: RectProps;
+  layer: Konva.Layer;
+  rect: Omit<Booth, "description">;
   selected?: boolean;
   rectLength: number;
   openForm: BoothFormState;
 };
+
 const BoothRect = (props: BoothRectProps) => {
-  const shapeRef = useRef<Konva.Rect>(null);
-  const trRef = useRef<Konva.Transformer>(null);
-  const { left, top, width, height } = props.rect;
-  const { watch, setValue, reset } = props.hookForm;
+  const { setValue, reset, watch } = props.hookForm;
+  const setValues = useCallback(
+    (x: number, y: number, w: number, h: number) => {
+      setValue("left", Math.round(x));
+      setValue("top", Math.round(y));
+      setValue("width", Math.round(w));
+      setValue("height", Math.round(h));
+    },
+    [setValue],
+  );
 
   useEffect(() => {
-    if (!shapeRef.current) return;
-    if (props.openForm === "none") {
-      const x = props.rect.left;
-      const y = props.rect.top;
-      const width = props.rect.width;
-      const height = props.rect.height;
-      shapeRef.current.setAttrs({ x, y, width, height });
-      reset();
-    }
-    if (!trRef.current) return;
-    if (!props.selected) return;
-    trRef.current.nodes([shapeRef.current]);
-    if (props.openForm === "edit") {
-      shapeRef.current.setZIndex(props.rectLength);
-      trRef.current.setZIndex(props.rectLength);
-    }
-    if (props.openForm === "add") {
-      shapeRef.current.setZIndex(props.rectLength);
-      trRef.current.setZIndex(props.rectLength + 1);
-    }
+    const { left, top, width, height } = props.rect;
+    const group = createGroup(left, top, props.selected);
+    const rect = createRect(width, height, props.selected);
+    const label = createTagLabel(props.rect.name);
+    const text = createText(props.rect.name);
+    const transformer = props.selected ? createTransformer(rect) : undefined;
 
-    const watchInputs = watch((value, { name }) => {
-      if (!trRef.current || !shapeRef.current) return;
-
-      if (name === "left" || name === "top" || name === "width" || name === "height") {
-        const { left, top, width, height } = value;
-        const x = Number(left);
-        const y = Number(top);
-        const w = Number(width);
-        const h = Number(height);
-        shapeRef.current.setAttrs({ x, y, width: w, height: h });
-        // shapeRef.current.getLayer()?.batchDraw();
-      }
-    });
-    return () => watchInputs.unsubscribe();
-  }, [props.selected, props.rectLength, props.rect, props.openForm, watch, reset]);
-
-  const setValues = (x: number, y: number, w: number, h: number) => {
-    setValue("left", Math.round(x));
-    setValue("top", Math.round(y));
-    setValue("width", Math.round(w));
-    setValue("height", Math.round(h));
-  };
-  const handleDragEnd = () => {
-    if (!shapeRef.current) return;
-    const { x, y, width, height } = shapeRef.current.getAttrs();
-    if (!x || !y || !width || !height) return;
-    const { x: scaleX, y: scaleY } = shapeRef.current.getAbsoluteScale();
-    const w = width * scaleX;
-    const h = height * scaleY;
-    setValues(x, y, w, h);
-  };
-  const handleTransformEnd = () => {
-    if (!shapeRef.current) return;
-    const { x, y, width, height } = shapeRef.current.getAttrs();
-    if (!x || !y || !width || !height) return;
-    const { x: scaleX, y: scaleY } = shapeRef.current.getAbsoluteScale();
-    const w = width * scaleX;
-    const h = height * scaleY;
-    shapeRef.current.scale({ x: 1, y: 1 });
-    setValues(x, y, w, h);
-  };
-
-  return (
-    <>
-      <Rect
-        ref={shapeRef}
-        x={left}
-        y={top}
-        width={width}
-        height={height}
-        stroke={props.selected ? "#ff0000" : "#ff000020"}
-        strokeWidth={5}
-        draggable={props.selected}
-        // onDragMove={setRectPosition}
-        onDragEnd={handleDragEnd}
-        strokeScaleEnabled={false}
-      />
-      {props.selected && (
-        <Transformer
-          ref={trRef}
-          flipEnabled={true}
-          keepRatio={false}
-          rotateEnabled={false}
-          //   onTransform={setRectSize}
-          onTransformEnd={handleTransformEnd}
-          boundBoxFunc={(oldBox, newBox) => {
-            // limit resize
-            if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
-              return oldBox;
-            }
-            return newBox;
-          }}
-        />
-      )}
-    </>
-  );
+    group.on("dragend", (e) => handleDragEnd(e, setValues));
+    transformer?.on("transformend", (e) => handleTransformEnd(e, setValues));
+    group.add(rect);
+    label.add(text);
+    group.add(label);
+    transformer && group.add(transformer);
+    props.layer.add(group);
+    const watchInputs = props.selected
+      ? watch((data, { name }) => {
+          if (name === "name" && data.name) {
+            text.text(data.name);
+            label.opacity(1);
+          }
+        })
+      : undefined;
+    return () => {
+      group.destroy();
+      watchInputs?.unsubscribe();
+    };
+  }, [props.layer, props.rect, props.selected, setValues, watch]);
+  return <></>;
 };
 
 export default BoothRect;
