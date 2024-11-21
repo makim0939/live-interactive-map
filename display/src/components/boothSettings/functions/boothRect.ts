@@ -76,12 +76,18 @@ const createTransformer = (target: Konva.Shape | Konva.Group) => {
 };
 const createTagLabel = (name: string) => {
   const label = new Konva.Label({ offset: { x: 2, y: 2 }, opacity: name ? 1 : 0 });
-  const tag = new Konva.Tag({ fill: "black", opacity: 0.7 });
+  const tag = new Konva.Tag({ fill: "black", opacity: 0.6 });
   label.add(tag);
   return label;
 };
 const createText = (name: string) => {
-  return new Konva.Text({ text: name, fontSize: 16, padding: 10, fill: "white" });
+  return new Konva.Text({
+    text: name,
+    letterSpacing: 0.06,
+    fontSize: 17,
+    padding: 10,
+    fill: "white",
+  });
 };
 
 export {
