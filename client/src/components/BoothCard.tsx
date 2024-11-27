@@ -26,7 +26,7 @@ const BoothCard = (props: BoothCardProps) => {
     FavAnimation();
   };
   return (
-    <div className=" fixed bottom-4 z-10 w-[96vw] h-20 mx-[2%] p-4  bg-bgwhite rounded-md flex justify-around items-center ">
+    <div className=" fixed bottom-4 z-10 mx-[2%] p-4  bg-bgwhite rounded-md flex justify-around items-center ">
       <div className=" w-[80vw] flex flex-col justify-center ">
         <p className=" text-lg">
           <b>{props.name}</b>

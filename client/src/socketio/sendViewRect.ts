@@ -5,7 +5,7 @@ const sendViewRect = (socket: Socket, viewRect: Rect) => {
   const colorInput = document.getElementById("colorInput") as HTMLInputElement;
   socket.emit("view-rect", {
     ...viewRect,
-    color: colorInput ? colorInput.value : "#00ff00",
+    color: colorInput ? colorInput.value : "#00ff00a0",
   });
 };
 export default sendViewRect;
